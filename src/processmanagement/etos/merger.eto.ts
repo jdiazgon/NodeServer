@@ -9,7 +9,7 @@
  */
 
 export interface MergerEto {
-readonly basePath?: string;
-readonly patchPath?: string;
-readonly targetCharset?: string;
+  readonly baseContent: string;
+  readonly patchContent: string;
+  readonly patchOverrides: boolean;
 }
