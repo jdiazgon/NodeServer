@@ -3,7 +3,7 @@ import { InputFileEto } from './etos/input-file.eto';
 
 @Controller('processmanagement')
 export class ProcessmanagementController {
-  @Post()
+  @Post('/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
     const path: string = inputFile.path;
     // console.log(path);
