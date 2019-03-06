@@ -16,16 +16,17 @@ export class ProcessmanagementController {
 
   @Post('/merge')
   merge(@Body() merger: MergerEto) {
-    const patchContent: string = merger.patchContent;
-    const baseContent: string = merger.baseContent;
+    const patchContent: string = merger.patchContent.replace(/\\n/gm, '\n');
+    const baseContent: string = merger.baseContent.replace(/\\n/gm, '\n');
     const patchOverrides: boolean = merger.patchOverrides;
 
-    let tsm = require('@devonfw/ts-merger');
-    let mergedCode: string = tsm.merge(
+    const tsm = require('@devonfw/ts-merger');
+    const mergedCode: string = tsm.merge(
       baseContent,
       patchContent,
       patchOverrides,
     );
+
     return mergedCode;
   }
 }
