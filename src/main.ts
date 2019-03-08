@@ -8,6 +8,11 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '12mb' }));
   app.use(bodyParser.urlencoded({ limit: '12mb', extended: true }));
 
+  if (port === undefined) {
+    // Default port when no parameter was passed
+    port = '5000';
+  }
+
   console.log('The port is: ' + port);
   await app.listen(port);
 }
