@@ -22,9 +22,9 @@ describe('Testing basic requests to the server', () => {
     const file: FileEto = new FileEto(content);
 
     return request(app.getHttpServer())
-      .post('/processmanagement/merge')
+      .post('/processmanagement/beautify')
       .send(file)
       .expect(201)
-      .expect('class a {\nb(c: any): void;\n\n\n}\n');
+      .expect('class a {\n    b(c: any): void;\n}');
   });
 });
