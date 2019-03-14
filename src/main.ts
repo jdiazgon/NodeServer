@@ -13,7 +13,6 @@ async function bootstrap() {
     port = '5000';
   }
 
-  console.log('The port is: ' + port);
   await app.listen(port);
 }
 bootstrap();
