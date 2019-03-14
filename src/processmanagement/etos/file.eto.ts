@@ -9,5 +9,9 @@
  */
 
 export class FileEto {
-  readonly filePath?: string;
+  readonly content?: string;
+
+  public constructor(content: string) {
+    this.content = content;
+  }
 }
