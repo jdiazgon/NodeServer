@@ -15,23 +15,23 @@ describe('Testing basic requests to the server', () => {
     await app.init();
   });
 
-  it('processmanagement/merge (POST) should return merged values without overriding base', () => {
-    const base = `interface a {
-                    b(c:any):void;
+  it('processmanagement/tsplugin/merge (POST) should return merged values without overriding base', () => {
+    const base = `class a {
+                    async b(c:any):void{}
                   }`;
-    const patch = `interface a {
-                    b(c:any):number;
+    const patch = `class a {
+                    b(c:any):number{}
                   }`;
     const merger: MergerEto = new MergerEto(base, patch, false);
 
     return request(app.getHttpServer())
-      .post('/processmanagement/merge')
+      .post('/processmanagement/tsplugin/merge')
       .send(merger)
       .expect(201)
-      .expect('\ninterface a {\nb(c: any): void;\n\n\n}\n');
+      .expect('\nclass a {\nasync b(c: any): void\n{ \n\n}\n\n\n}\n');
   });
 
-  it('processmanagement/merge (POST) should return merged values overriding base', () => {
+  it('processmanagement/tsplugin/merge (POST) should return merged values overriding base', () => {
     const base = `interface a {
                     b(c:any):void;
                   }`;
@@ -41,7 +41,7 @@ describe('Testing basic requests to the server', () => {
     const merger: MergerEto = new MergerEto(base, patch, true);
 
     return request(app.getHttpServer())
-      .post('/processmanagement/merge')
+      .post('/processmanagement/tsplugin/merge')
       .send(merger)
       .expect(201)
       .expect('\ninterface a {\nb(c: any): number;\n\n\n}\n');

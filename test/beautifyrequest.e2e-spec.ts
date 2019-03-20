@@ -15,14 +15,14 @@ describe('Testing basic requests to the server', () => {
     await app.init();
   });
 
-  it('processmanagement/beautify (POST) should return beautified code', () => {
+  it('processmanagement/tsplugin/beautify (POST) should return beautified code', () => {
     const content = `class a {
                     b(c:any):void;
                   }`;
     const file: FileEto = new FileEto(content);
 
     return request(app.getHttpServer())
-      .post('/processmanagement/beautify')
+      .post('/processmanagement/tsplugin/beautify')
       .send(file)
       .expect(201)
       .expect('class a {\n    b(c: any): void;\n}');
