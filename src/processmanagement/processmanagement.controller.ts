@@ -15,7 +15,7 @@ export class ProcessmanagementController {
     return false;
   }
 
-  @Post('/merge')
+  @Post('/tsplugin/merge')
   merge(@Body() merger: MergerEto) {
     const patchContent: string = merger.patchContent.replace(/\\n/gm, '\n');
     const baseContent: string = merger.baseContent.replace(/\\n/gm, '\n');
@@ -31,7 +31,7 @@ export class ProcessmanagementController {
     return mergedCode;
   }
 
-  @Post('/beautify')
+  @Post('/tsplugin/beautify')
   beautify(@Body() file: FileEto) {
     const content: string = file.content.replace(/\\n/gm, '\n');
 
