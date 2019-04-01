@@ -50,6 +50,7 @@ $ yarn run test:cov
 ## Create executable
 
 ```bash
+$ yarn run build
 $ yarn pkg --targets latest-win-x64 dist/main.js
 ```
 
