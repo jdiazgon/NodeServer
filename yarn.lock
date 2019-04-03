@@ -20,9 +20,9 @@
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.2.3.tgz#32f5df65744b70888d17872ec106b02434ba1489"
 
-"@devonfw/ts-merger@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@devonfw/ts-merger/-/ts-merger-2.2.4.tgz#16b2c69d576b9322a32b297bc25825b990c6343d"
+"@devonfw/ts-merger@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@devonfw/ts-merger/-/ts-merger-2.2.5.tgz#3976c9f31c3cab5d93a55d626f8dbd55c4ba89ee"
   dependencies:
     ts-node "^8.0.2"
 
