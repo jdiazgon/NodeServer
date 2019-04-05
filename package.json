@@ -1,7 +1,7 @@
 {
   "name": "@devonfw/cobigen-nestserver",
   "bin": "dist/main.js",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Nestjs server to implement the input reader and merger for CobiGen",
   "author": "CobiGen Team",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@devonfw/ts-merger": "^2.2.5",
+    "@devonfw/ts-merger": "^2.2.6",
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "js-beautify": "^1.9.0",
