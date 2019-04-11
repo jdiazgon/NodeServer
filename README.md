@@ -51,7 +51,7 @@ $ yarn run test:cov
 
 ```bash
 $ yarn run build
-$ yarn pkg --targets latest-win-x64 dist/main.js
+$ yarn pkg --targets latest-win-x64 --output nestserver-1.0.7.exe dist/main.js
 ```
 
 
