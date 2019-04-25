@@ -1,5 +1,5 @@
 {
-  "name": "@devonfw/cobigen-nestserver-linux",
+  "name": "@devonfw/cobigen-nestserver-macos",
   "bin": "dist/main.js",
   "version": "1.0.7",
   "description": "Nestjs server to implement the input reader and merger for CobiGen",
