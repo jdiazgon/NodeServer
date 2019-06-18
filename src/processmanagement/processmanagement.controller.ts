@@ -3,6 +3,10 @@ import { InputFileEto } from './etos/input-file.eto';
 import { FileEto } from './etos/file.eto';
 import { MergerEto } from './etos/merger.eto';
 
+import { ModelEto } from './etos/model.eto';
+import { InputReader } from './inputreader/input-reader';
+import { TypescriptParser } from 'typescript-parser/TypescriptParser';
+
 @Controller('processmanagement')
 export class ProcessmanagementController {
   @Post('/isValidInput')
@@ -13,6 +17,24 @@ export class ProcessmanagementController {
       return true;
     }
     return false;
+  }
+
+  @Post('/tsplugin/getInputModel')
+  async getInputModel(@Body() inputFile: InputFileEto) {
+    // const inputReader: InputReader = new InputReader();
+
+    // const model = await inputReader.getInputObjects(inputFile.path);
+
+    const parser = new TypescriptParser();
+    const parsedFile = await parser.parseFile(inputFile.path, 'blank');
+
+    console.log(parsedFile);
+
+    const model: ModelEto = new ModelEto(JSON.stringify(parsedFile));
+
+    console.log(model.input);
+
+    return model.input;
   }
 
   @Post('/tsplugin/merge')

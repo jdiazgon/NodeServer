@@ -3,3 +3,5 @@
 node_modules/
 .vscode
 dist/
+nestserver-linux-1.0.7
+nestserver-macos-1.0.7

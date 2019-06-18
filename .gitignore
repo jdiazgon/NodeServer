@@ -2,6 +2,8 @@
 .ntvs_analysis.dat
 node_modules/
 nestserver-1.0.7.exe
+nestserver-linux-1.0.7
+nestserver-macos-1.0.7
 .vscode
 dist/
 yarn-error.log
