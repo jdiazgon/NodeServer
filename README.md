@@ -53,7 +53,9 @@ $ yarn run test:cov
 $ yarn run build
 $ yarn pkg --targets latest-win-x64 --output nestserver-1.0.7.exe dist/main.js
 ```
+## Publish
 
+Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#toc-publishing-your-package)
 
 ## License
 
