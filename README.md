@@ -52,7 +52,9 @@ $ yarn run test:cov
 ```bash
 $ yarn pkg --targets latest-win-x64 dist/main.js
 ```
+## Publish
 
+Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#toc-publishing-your-package)
 
 ## License
 
