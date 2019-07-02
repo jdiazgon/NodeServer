@@ -50,7 +50,8 @@ $ yarn run test:cov
 ## Create executable
 
 ```bash
-$ yarn pkg --targets latest-win-x64 dist/main.js
+$ yarn build
+$ yarn pkg --targets latest-macos-x64 --output nestserver-macos-1.0.8 dist/main.js
 ```
 
 
