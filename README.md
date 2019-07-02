@@ -50,7 +50,8 @@ $ yarn run test:cov
 ## Create executable
 
 ```bash
-$ yarn pkg --targets latest-win-x64 dist/main.js
+$ yarn run build
+$ yarn pkg --targets latest-win-x64 --output nestserver-1.0.7.exe dist/main.js
 ```
 ## Publish
 
