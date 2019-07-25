@@ -1,4 +1,5 @@
 export class InputFileEto {
-  readonly path: string;
+  readonly filename: string;
+  readonly content: string;
   readonly charset: string;
 }
