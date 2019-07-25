@@ -9,8 +9,9 @@
  */
 
 export class ModelEto {
-  readonly fileType?: string;
-  readonly fileName?: string;
-  readonly Fields?: object;
-  readonly Imports?: object;
+  readonly input: string;
+
+  public constructor(input: string) {
+    this.input = input;
+  }
 }
