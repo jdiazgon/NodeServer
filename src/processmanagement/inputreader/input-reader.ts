@@ -40,7 +40,7 @@ export class InputReader {
         newstr = newstr.replace(trailingCommasRe, "");
     }
 
-    return new ModelEto(JSON.stringify(JSON.parse(newstr), null, 2));
+    return new ModelEto(JSON.stringify(JSON.parse(newstr)));
   }
 
   private extendDecorator(decorator:Decorator, entityModuleMapper:object)
