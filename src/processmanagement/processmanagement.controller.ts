@@ -9,10 +9,15 @@ export class ProcessmanagementController {
   @Post('/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
     const filename: string = inputFile.filename;
-    // console.log(path);
-    if (filename.includes('.nest')) {
-      return true;
+    console.log(filename);
+    const validExtensions = ['.nest','.ts'];
+    for (let extension of validExtensions) {
+      if (filename.includes(extension)) {
+        console.log(true);
+        return true;
+      }
     }
+    console.log(false);
     return false;
   }
 
