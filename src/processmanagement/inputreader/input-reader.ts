@@ -1,40 +1,101 @@
-import { TypescriptParser } from 'typescript-parser/TypescriptParser';
-import { InterfaceDeclaration } from 'typescript-parser/declarations/InterfaceDeclaration';
-import { ClassDeclaration } from 'typescript-parser/declarations/ClassDeclaration';
 import { ModelEto } from './../etos/model.eto';
-import { PropertyDeclaration } from 'typescript-parser/declarations/PropertyDeclaration';
-
+import Decorator from "@devonfw/ts-merger/build/components/decorator/Decorator";
 export class InputReader {
-  readonly path: string;
+  readonly content;
 
-  public async getInputObjects(path: string) {
-    const parser = new TypescriptParser();
-    const parsedFile = await parser.parseFile(path, 'blank');
+  public async getInputObjects(content: string, removeEmptyFields : boolean) {
+    const tsm = require('@devonfw/ts-merger');
+    const parsedFile = tsm.readFile(content);
 
-    console.log(parsedFile);
+    // Extending the model
+    // identifier and type fields are extended with the entity's type
 
-    parsedFile.declarations.forEach(declaration => {
-      if (declaration instanceof InterfaceDeclaration) {
-        const interfaceDeclaration: InterfaceDeclaration = declaration;
-        this.getProperties(interfaceDeclaration.properties);
+    // Setting the import dictionary
+    var entityModuleMapper: { [id: string] : String; } = {};
+    parsedFile.getImports().forEach( (i) => {
+        let module = i.getModule();
+        i.getNamed().forEach ((name) =>{
+            entityModuleMapper[String(name)] = module;
+        })
+    });
 
-        const model: ModelEto = new ModelEto(JSON.stringify(parsedFile));
+    // Traversing the parsed file object and extending each decorator
+    this.traverse(parsedFile,this.extendDecorator,entityModuleMapper);
 
-        console.log('RESULT FROM PARSER:\n');
-        console.log(model);
+    if (!removeEmptyFields)
+    {
+      return new ModelEto(JSON.stringify(parsedFile));
+    }
 
-        return model;
-      } else if (declaration instanceof ClassDeclaration) {
-        console.log('Hooray');
+    // Removing the empty fields
+    var re = /"\w+":(""|\[\]|{}),?("module":null)?/gi
+    var trailingCommasRe = /\,(?=\s*?[\}\]])/g;
+
+    const str = JSON.stringify(parsedFile);
+    var newstr = str;
+
+    while (newstr.search(re)> -1)
+    {
+        newstr = newstr.replace(re, ""); 
+        newstr = newstr.replace(trailingCommasRe, "");
+    }
+
+    return new ModelEto(JSON.stringify(JSON.parse(newstr), null, 2));
+  }
+
+  private extendDecorator(decorator:Decorator, entityModuleMapper:object)
+  {
+      let identifier = decorator.getIdentifier();
+      if (identifier != '')
+      {
+          decorator.setIdentifier(
+          {
+              "name" : identifier,
+              "module": entityModuleMapper[String(identifier)]
+          }
+          );
       }
-    });
-
-    return '';
+      
   }
 
-  private getProperties(properties: PropertyDeclaration[]) {
-    properties.forEach(element => {
-      console.log(element.name);
-    });
-  }
+  private traverse(o,func,entityModuleMapper) {
+    for (var i in o) {
+        if(o[i] && o[i]!=null){
+            //console.log(typeof o[i].getIsCallExpression === 'function');
+            if(typeof o[i].getType === 'function'){
+                let name = o[i].getType();
+                let module = entityModuleMapper[String(name)];
+                if (typeof module == 'undefined')
+                {
+                    module = null;
+                }
+                o[i].setType(
+                    {
+                        "name" : name,
+                        "module": module
+                    }
+                );
+            }
+            if (typeof o[i].getIsCallExpression === 'function'){
+              //func.apply(this,[o[i]]); 
+              let identifier = o[i].getIdentifier();
+              if (identifier != '')
+              {
+                  o[i].setIdentifier(
+                  {
+                      "name" : identifier,
+                      "module": entityModuleMapper[String(identifier)]
+                  }
+                  );
+              } 
+          }
+        }
+        if (o[i] !== null && typeof(o[i])=="object" && !(o[i] instanceof Decorator)) {
+            //going one step down in the object tree!!
+            //console.log("STEP DOWN");
+            this.traverse(o[i],func,entityModuleMapper);
+        }
+
+    }
+}
 }

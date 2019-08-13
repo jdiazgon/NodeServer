@@ -2,18 +2,15 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { InputFileEto } from './etos/input-file.eto';
 import { FileEto } from './etos/file.eto';
 import { MergerEto } from './etos/merger.eto';
-
-import { ModelEto } from './etos/model.eto';
 import { InputReader } from './inputreader/input-reader';
-import { TypescriptParser } from 'typescript-parser/TypescriptParser';
 
 @Controller('processmanagement')
 export class ProcessmanagementController {
   @Post('/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
-    const path: string = inputFile.path;
+    const filename: string = inputFile.filename;
     // console.log(path);
-    if (path.includes('.nest')) {
+    if (filename.includes('.nest')) {
       return true;
     }
     return false;
@@ -21,18 +18,14 @@ export class ProcessmanagementController {
 
   @Post('/tsplugin/getInputModel')
   async getInputModel(@Body() inputFile: InputFileEto) {
-    // const inputReader: InputReader = new InputReader();
+    const inputReader: InputReader = new InputReader();
 
-    // const model = await inputReader.getInputObjects(inputFile.path);
+    const model = await inputReader.getInputObjects(inputFile.content,true);
 
-    const parser = new TypescriptParser();
-    const parsedFile = await parser.parseFile(inputFile.path, 'blank');
-
-    console.log(parsedFile);
-
-    const model: ModelEto = new ModelEto(JSON.stringify(parsedFile));
-
-    console.log(model.input);
+    //const parser = new TypescriptParser();
+    //const parsedFile = await parser.parseSource(inputFile.content)
+    console.log("DEBUG");
+    console.log(inputFile.content);
 
     return model.input;
   }
