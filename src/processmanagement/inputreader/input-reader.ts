@@ -1,5 +1,4 @@
 import { ModelEto } from './../etos/model.eto';
-import Decorator from "@devonfw/ts-merger/build/components/decorator/Decorator";
 export class InputReader {
   readonly content;
 
@@ -20,7 +19,7 @@ export class InputReader {
     });
 
     // Traversing the parsed file object and extending each decorator
-    this.traverse(parsedFile,this.extendDecorator,entityModuleMapper);
+    this.traverse(parsedFile,entityModuleMapper);
 
     if (!removeEmptyFields)
     {
@@ -43,22 +42,8 @@ export class InputReader {
     return new ModelEto(JSON.stringify(JSON.parse(newstr)));
   }
 
-  private extendDecorator(decorator:Decorator, entityModuleMapper:object)
-  {
-      let identifier = decorator.getIdentifier();
-      if (identifier != '')
-      {
-          decorator.setIdentifier(
-          {
-              "name" : identifier,
-              "module": entityModuleMapper[String(identifier)]
-          }
-          );
-      }
-      
-  }
 
-  private traverse(o,func,entityModuleMapper) {
+  private traverse(o,entityModuleMapper) {
     for (var i in o) {
         if(o[i] && o[i]!=null){
             //console.log(typeof o[i].getIsCallExpression === 'function');
@@ -90,10 +75,10 @@ export class InputReader {
               } 
           }
         }
-        if (o[i] !== null && typeof(o[i])=="object" && !(o[i] instanceof Decorator)) {
+        if (o[i] !== null && typeof(o[i])=="object") {
             //going one step down in the object tree!!
             //console.log("STEP DOWN");
-            this.traverse(o[i],func,entityModuleMapper);
+            this.traverse(o[i],entityModuleMapper);
         }
 
     }
