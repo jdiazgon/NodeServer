@@ -25,7 +25,7 @@ export class ProcessmanagementController {
   async getInputModel(@Body() inputFile: InputFileEto) {
     const inputReader: InputReader = new InputReader();
 
-    const model = await inputReader.getInputObjects(inputFile.content,true);
+    const model = await inputReader.getInputObjects(inputFile,true);
 
     //const parser = new TypescriptParser();
     //const parsedFile = await parser.parseSource(inputFile.content)

@@ -1,12 +1,14 @@
 import { ModelEto } from './../etos/model.eto';
+import { InputFileEto } from '../etos/input-file.eto';
 export class InputReader {
   readonly content;
 
-  public async getInputObjects(content: string, removeEmptyFields : boolean) {
+  public async getInputObjects(inputFile:InputFileEto, removeEmptyFields : boolean) {
     const tsm = require('@devonfw/ts-merger');
-    const parsedFile = tsm.readFile(content);
+    const parsedFile = tsm.readFile(inputFile.content);
 
     // Extending the model
+    parsedFile.path = inputFile.filename;
     // identifier and type fields are extended with the entity's type
 
     // Setting the import dictionary
