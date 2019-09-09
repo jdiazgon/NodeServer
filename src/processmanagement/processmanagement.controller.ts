@@ -9,7 +9,7 @@ export class ProcessmanagementController {
   isValidInput(@Body() inputFile: InputFileEto) {
     const filename: string = inputFile.filename.toLowerCase();
 
-    const validExtensions = ['.nest', '.ts'];
+    const validExtensions = ['.nest', '.ts', 'js'];
     for (const extension of validExtensions) {
       if (filename.includes(extension)) {
         return true;
@@ -22,7 +22,7 @@ export class ProcessmanagementController {
   async getInputModel(@Body() inputFile: InputFileEto) {
     const inputReader: InputReader = new InputReader();
     const model = await inputReader.getInputObjects(inputFile, true);
-
+    console.log(model.input)
     return model.input;
   }
 
