@@ -1,6 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { InputFileEto } from './etos/input-file.eto';
-import { FileEto } from './etos/file.eto';
 import { MergerEto } from './etos/merger.eto';
 import { InputReader } from './inputreader/input-reader';
 
@@ -44,7 +43,7 @@ export class ProcessmanagementController {
   }
 
   @Post('/tsplugin/beautify')
-  beautify(@Body() file: FileEto) {
+  beautify(@Body() file: InputFileEto) {
     const content: string = file.content.replace(/\\n/gm, '\n');
 
     const beautify = require('js-beautify');

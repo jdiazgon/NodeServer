@@ -29,26 +29,29 @@ export class InputReader {
     }
 
     // Removing the empty fields
-    var re = /"\w+":(""|\[\]|{}),?("module":null)?/gi
-    var trailingCommasRe = /\,(?=\s*?[\}\]])/g;
+    const parsedFileString: string = this.removeEmptyFields(parsedFile)
 
-    const str = JSON.stringify(parsedFile);
-    var newstr = str;
+    return new ModelEto(JSON.stringify(JSON.parse(parsedFileString)));
+  }
 
-    while (newstr.search(re)> -1)
+  private removeEmptyFields(parsedFile): string {
+    var regExp = /"\w+":(""|\[\]|{}),?("module":null)?/gi
+    var trailingCommasRegExp = /\,(?=\s*?[\}\]])/g;
+
+    let parsedFileString: string = JSON.stringify(parsedFile);
+
+    while (parsedFileString.search(regExp)> -1)
     {
-        newstr = newstr.replace(re, ""); 
-        newstr = newstr.replace(trailingCommasRe, "");
+        parsedFileString = parsedFileString.replace(regExp, ""); 
+        parsedFileString = parsedFileString.replace(trailingCommasRegExp, "");
     }
-
-    return new ModelEto(JSON.stringify(JSON.parse(newstr)));
+    return parsedFileString;
   }
 
 
   private traverse(o,entityModuleMapper) {
     for (var i in o) {
         if(o[i] && o[i]!=null){
-            //console.log(typeof o[i].getIsCallExpression === 'function');
             if(typeof o[i].getType === 'function'){
                 let name = o[i].getType();
                 let module = entityModuleMapper[String(name)];
@@ -64,7 +67,6 @@ export class InputReader {
                 );
             }
             if (typeof o[i].getIsCallExpression === 'function'){
-              //func.apply(this,[o[i]]); 
               let identifier = o[i].getIdentifier();
               if (identifier != '')
               {
@@ -79,7 +81,6 @@ export class InputReader {
         }
         if (o[i] !== null && typeof(o[i])=="object") {
             //going one step down in the object tree!!
-            //console.log("STEP DOWN");
             this.traverse(o[i],entityModuleMapper);
         }
 

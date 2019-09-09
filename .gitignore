@@ -5,4 +5,3 @@ nestserver-1.0.8.exe
 .vscode
 dist/
 yarn-error.log
-yarn.lock

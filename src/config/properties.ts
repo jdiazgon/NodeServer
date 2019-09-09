@@ -1,6 +1,6 @@
 const properties = {
-  // 10 minutes timeout
-  timeout: 10 * 60 * 1000,
+  // 2 minutes timeout
+  timeout: 2 * 60 * 1000,
 };
 
 export default properties;
