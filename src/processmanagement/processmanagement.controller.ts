@@ -8,29 +8,21 @@ import { InputReader } from './inputreader/input-reader';
 export class ProcessmanagementController {
   @Post('/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
-    const filename: string = inputFile.filename;
-    console.log(filename);
-    const validExtensions = ['.nest','.ts'];
-    for (let extension of validExtensions) {
+    const filename: string = inputFile.filename.toLowerCase();
+
+    const validExtensions = ['.nest', '.ts'];
+    for (const extension of validExtensions) {
       if (filename.includes(extension)) {
-        console.log(true);
         return true;
       }
     }
-    console.log(false);
     return false;
   }
 
   @Post('/tsplugin/getInputModel')
   async getInputModel(@Body() inputFile: InputFileEto) {
     const inputReader: InputReader = new InputReader();
-
-    const model = await inputReader.getInputObjects(inputFile,true);
-
-    //const parser = new TypescriptParser();
-    //const parsedFile = await parser.parseSource(inputFile.content)
-    console.log("DEBUG");
-    console.log(inputFile.content);
+    const model = await inputReader.getInputObjects(inputFile, true);
 
     return model.input;
   }
