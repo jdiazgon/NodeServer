@@ -17,8 +17,8 @@ describe('Testing input reader request to the server', () => {
   it('processmanagement/tsplugin/getInputModel (POST) should return true', () => {
     return request(app.getHttpServer())
       .post('processmanagement/tsplugin/getInputModel')
-      .send({ path: 'bla.nest' })
+      .send({ content: 'class a {}' })
       .expect(201)
-      .expect('true');
+      .toBeNonEmptyString();
   });
 });
