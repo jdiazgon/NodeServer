@@ -10,4 +10,10 @@ export class InputFileEto {
   readonly filename: string;
   readonly content: string;
   readonly charset: string;
+
+  public constructor(filename: string, content: string, charset: string) {
+    this.filename = filename;
+    this.content = content;
+    this.charset = charset;
+  }
 }
