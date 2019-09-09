@@ -22,7 +22,7 @@ export class ProcessmanagementController {
   async getInputModel(@Body() inputFile: InputFileEto) {
     const inputReader: InputReader = new InputReader();
     const model = await inputReader.getInputObjects(inputFile, true);
-    console.log(model.input)
+
     return model.input;
   }
 
