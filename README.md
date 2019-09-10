@@ -53,7 +53,9 @@ $ yarn run test:cov
 $ yarn run build
 $ yarn pkg --targets latest-linux-x64 --output nestserver-linux-1.0.8 dist/main.js
 ```
+## Publish
 
+Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#toc-publishing-your-package)
 
 ## License
 

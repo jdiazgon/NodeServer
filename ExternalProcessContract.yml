@@ -12,7 +12,7 @@ paths:
     post:
       description: Returns true or false whether it is a valid input for generation
       requestBody:
-        $ref: '#/components/requestBodies/File'
+        $ref: '#/components/requestBodies/InputFile'
       operationId: isValidInput
       responses:
         '200':
@@ -26,99 +26,19 @@ paths:
                     type: boolean
         '404':
           description: Not found
-  /processmanagement/inputReader/createModel/:
+  /processmanagement/inputReader/getInputModel/:
     post:
+      description: Requesting map model of the input file
       requestBody:
-        $ref: '#/components/requestBodies/File'
-      operationId: createModel
-      responses:
-        '200':
-          description: Returns data model in JSON format
-          content:
-            application/json:
-              schema:
-                  $ref: '#/components/schemas/Model'
-        '404':
-          description: Not found
-  /processmanagement/inputReader/getInputObjects/:
-    post:
-      description: Requesting models for each input object found at the input file
-      requestBody:
-        $ref: '#/components/requestBodies/File'
+        $ref: '#/components/requestBodies/InputFile'
       operationId: getInputObjects
       responses:
         '200':
-          description: Returns array of models in JSON format
-          content:
-            application/json:
-              schema:
-                  $ref: '#/components/schemas/Models'
-        '404':
-          description: Not found
-  /processmanagement/inputReader/getInputObjectsRecursively/:
-    post:
-      description: Requesting models for each input object found at the input file (recursively)
-      requestBody:
-        $ref: '#/components/requestBodies/File'
-      operationId: getInputObjectsRecursively
-      responses:
-        '200':
-          description: Returns array of models in JSON format
-          content:
-            application/json:
-              schema:
-                  $ref: '#/components/schemas/Models'
-        '404':
-          description: Not found
-  /processmanagement/inputReader/read/:
-    post:
-      description: Returns a valid input for CobiGen in JSON format
-      requestBody:
-        $ref: '#/components/requestBodies/File'
-      operationId: read
-      responses:
-        '200':
-          description: Returns a valid input for CobiGen in JSON format
+          description: Returns a model in JSON format
           content:
             application/json:
               schema:
                   $ref: '#/components/schemas/Model'
-        '404':
-          description: Not found
-  /processmanagement/matcher/matches/:
-    post:
-      description:  Checks whether the given matcher matches the sent input
-      requestBody:
-        $ref: '#/components/requestBodies/Matcher'
-      operationId: matches
-      responses:
-        '200':
-          description: Returns true or false whether it matches
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  matches:
-                    type: boolean
-        '404':
-          description: Not found
-  /processmanagement/matcher/resolveVariables/:
-    post:
-      description:  resolve all given variable assignments
-      requestBody:
-        $ref: '#/components/requestBodies/File'
-      operationId: resolveVariables
-      responses:
-        '200':
-          description: Returns resolved variables
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isValidInput:
-                    type: boolean
         '404':
           description: Not found
   /processmanagement/merger/merge/:
@@ -205,33 +125,7 @@ components:
           description: Input file
           type: object
           properties:
-            path:
-              type: string
-        Matcher:
-          x-component: processmanagement
-          description: Matcher properties
-          type: object
-          properties:
-            inputToMatch:
-              type: object
-            type:
-              type: string
-            value:
-              type: string
-            accumulationType:
-              type: string
-        VariableAssignment:
-          x-component: processmanagement
-          description: Matcher properties
-          type: object
-          properties:
-            inputToResolve:
-              type: string
-            type:
-              type: string
-            key:
-              type: string
-            value:
+            contents:
               type: string
         Merger:
           x-component: processmanagement
@@ -266,21 +160,7 @@ components:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/File'
-          required: true
-        Matcher:
-          description: Matcher properties
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Matcher'
-          required: true
-        VariableAssignment:
-          description: Variable assignment properties
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VariableAssignment'
+                $ref: '#/components/schemas/InputFile'
           required: true
         Merger:
           description: Objects to be merged
