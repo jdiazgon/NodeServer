@@ -1,7 +1,7 @@
 {
   "name": "@devonfw/cobigen-nestserver-linux",
   "bin": "dist/main.js",
-  "version": "1.0.9",
+  "version": "1.1.1",
   "description": "Nestjs server to implement the input reader and merger for CobiGen",
   "author": "CobiGen Team",
   "license": "MIT",
