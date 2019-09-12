@@ -19,7 +19,7 @@ describe('Testing basic requests to the server', () => {
     const content = `class a {
                     b(c:any):void;
                   }`;
-    const file: InputFileEto = new InputFileEto("", content, "");
+    const file: InputFileEto = new InputFileEto('', content, '');
 
     return request(app.getHttpServer())
       .post('/processmanagement/tsplugin/beautify')

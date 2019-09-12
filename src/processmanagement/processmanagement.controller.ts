@@ -1,11 +1,16 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { InputFileEto } from './etos/input-file.eto';
 import { MergerEto } from './etos/merger.eto';
 import { InputReader } from './inputreader/input-reader';
 
 @Controller('processmanagement')
 export class ProcessmanagementController {
-  @Post('/isValidInput')
+  @Get('tsplugin/isConnectionReady')
+  isConnectionReady() {
+    return true;
+  }
+
+  @Post('tsplugin/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
     const filename: string = inputFile.filename.toLowerCase();
 
