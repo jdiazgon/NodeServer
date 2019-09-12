@@ -1,18 +1,29 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { InputFileEto } from './etos/input-file.eto';
-import { FileEto } from './etos/file.eto';
 import { MergerEto } from './etos/merger.eto';
+import { InputReader } from './inputreader/input-reader';
 
 @Controller('processmanagement')
 export class ProcessmanagementController {
   @Post('/isValidInput')
   isValidInput(@Body() inputFile: InputFileEto) {
-    const path: string = inputFile.path;
-    // console.log(path);
-    if (path.includes('.nest')) {
-      return true;
+    const filename: string = inputFile.filename.toLowerCase();
+
+    const validExtensions = ['.nest', '.ts', 'js'];
+    for (const extension of validExtensions) {
+      if (filename.includes(extension)) {
+        return true;
+      }
     }
     return false;
+  }
+
+  @Post('/tsplugin/getInputModel')
+  async getInputModel(@Body() inputFile: InputFileEto) {
+    const inputReader: InputReader = new InputReader();
+    const model = await inputReader.getInputObjects(inputFile, true);
+
+    return model.input;
   }
 
   @Post('/tsplugin/merge')
@@ -32,7 +43,7 @@ export class ProcessmanagementController {
   }
 
   @Post('/tsplugin/beautify')
-  beautify(@Body() file: FileEto) {
+  beautify(@Body() file: InputFileEto) {
     const content: string = file.content.replace(/\\n/gm, '\n');
 
     const beautify = require('js-beautify');
