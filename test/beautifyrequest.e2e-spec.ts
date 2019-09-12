@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { FileEto } from '../src/processmanagement/etos/file.eto';
+import { InputFileEto } from '../src/processmanagement/etos/input-file.eto';
 
 describe('Testing basic requests to the server', () => {
   let app;
@@ -19,7 +19,7 @@ describe('Testing basic requests to the server', () => {
     const content = `class a {
                     b(c:any):void;
                   }`;
-    const file: FileEto = new FileEto(content);
+    const file: InputFileEto = new InputFileEto("", content, "");
 
     return request(app.getHttpServer())
       .post('/processmanagement/tsplugin/beautify')

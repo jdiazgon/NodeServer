@@ -53,6 +53,9 @@ $ yarn run test:cov
 $ yarn build
 $ yarn pkg --targets latest-macos-x64 --output nestserver-macos-1.0.8 dist/main.js
 ```
+## Publish
+
+Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#toc-publishing-your-package)
 
 ## License
 

@@ -3,5 +3,5 @@
 node_modules/
 .vscode
 dist/
-nestserver-1.0.9.exe
-nestserver-linux-1.0.9
+nestserver-1.1.1.exe
+nestserver-linux-1.1.1
