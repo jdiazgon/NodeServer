@@ -7,10 +7,18 @@ info:
   description: Specification of communication between external process and CobiGen
   version: 1.0.0
   x-rootpackage: com.devonfw.poc
+
 paths:
-  /processmanagement/inputReader/isValidInput/:
+  /processmanagement/todoplugin/isConnectionReady/:
+    get:
+      description: Needed for CobiGen to know that the server is ready to receive requests. Also we need it to differentiate plug-ins.
+      responses:
+        '200':
+          description: OK
+
+  /processmanagement/todoplugin/isValidInput/:
     post:
-      description: Returns true or false whether it is a valid input for generation
+      description: Returns true or false whether it is a valid input for generation. It can be a simple file extension check or more complex logic.
       requestBody:
         $ref: '#/components/requestBodies/InputFile'
       operationId: isValidInput
@@ -18,17 +26,15 @@ paths:
         '200':
           description: Returns true or false whether it is a valid input for generation
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  isValidInput:
-                    type: boolean
+                type: boolean
         '404':
           description: Not found
-  /processmanagement/inputReader/getInputModel/:
+
+  /processmanagement/todoplugin/getInputModel/:
     post:
-      description: Requesting map model of the input file
+      description: Requesting a key-value model of the input file in JSON format.
       requestBody:
         $ref: '#/components/requestBodies/InputFile'
       operationId: getInputObjects
@@ -41,7 +47,8 @@ paths:
                   $ref: '#/components/schemas/Model'
         '404':
           description: Not found
-  /processmanagement/merger/merge/:
+
+  /processmanagement/todoplugin/merge/:
     post:
       description:  Merges two files and returns the result
       requestBody:
@@ -49,24 +56,16 @@ paths:
       operationId: merge
       responses:
         '200':
-          description: Returns resolved variables
+          description: Returns merge file as a string
           content:
             text/plain:
               schema:
                 type: string
         '404':
           description: Not found
+
 components:
     schemas:
-        Models:
-          x-component: processmanagement
-          description: Array of models
-          type: array
-          items:
-            type: object
-            properties:
-              Field:
-                $ref: '#/components/schemas/Model'
         Model:
           x-component: processmanagement
           description: Data model of the input file
@@ -88,7 +87,7 @@ components:
               $ref: '#/components/schemas/Imports'
         Fields:
           x-component: processmanagement
-          description: Array of fields
+          description: Not really needed, just used as an example for the model.
           type: array
           items:
             type: object
@@ -97,7 +96,7 @@ components:
                 $ref: '#/components/schemas/Field'
         Field:
           x-component: processmanagement
-          description: Field
+          description: Not really needed, just used as an example for the model.
           type: object
           properties:
             fieldName:
@@ -106,7 +105,7 @@ components:
                 type: string
         Imports:
           x-component: processmanagement
-          description: Array of imports
+          description: Not really needed, just used as an example for the model.
           type: array
           items:
             type: object
@@ -115,7 +114,7 @@ components:
                 $ref: '#/components/schemas/Import'
         Import:
           x-component: processmanagement
-          description: Field
+          description: Not really needed, just used as an example for the model.
           type: object
           properties:
             importValue:
@@ -125,11 +124,15 @@ components:
           description: Input file
           type: object
           properties:
-            contents:
+            filename:
+              type: string
+            content:
+              type: string
+            charset:
               type: string
         Merger:
           x-component: processmanagement
-          description: Merger properties
+          description: Merger properties. baseContent is the current user's file. patchContent is CobiGen freshly generated file. patchOverrides is set to true when in case of conflict, we want to override using patch.
           type: object
           properties:
             baseContent:
@@ -148,22 +151,17 @@ components:
               schema:
                 $ref: '#/components/schemas/Model'
           required: true
-        Models:
-          description: Array of models (JSON format)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Models'
-          required: true
+
         InputFile:
-          description: Input file path
+          description: Input file for CobiGen to parse
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/InputFile'
           required: true
+          
         Merger:
-          description: Objects to be merged
+          description: baseContent is the current user's file. patchContent is CobiGen freshly generated file. patchOverrides is set to true when in case of conflict, we want to override using patch.
           content:
             application/json:
               schema:
