@@ -71,16 +71,17 @@ components:
           description: Data model of the input file
           type: object
           properties:
-            fileType:
+            path:
               type: string
-              maxLength: 30
-              minLength: 1
+              description: Input file path. It can also be just the file name.
               uniqueItems: true
-            fileName:
-              type: string
-              maxLength: 30
-              minLength: 1
-              uniqueItems: true
+            inputObject:
+              $ref: '#/components/schemas/InputObject'
+        InputObject:
+          x-component: processmanagement
+          description: Input object containing needed information for the templates
+          type: object
+          properties:
             Fields:
               $ref: '#/components/schemas/Fields'
             Imports: 
