@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - url: 'https://localhost:5000/'
-    description: Nodejs server
+    description: todo server
 info:
   title: External process communication
   description: Specification of communication between external process and CobiGen
