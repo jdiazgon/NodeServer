@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - url: 'https://localhost:5000/'
-    description: todo server
+    description: nest server
 info:
   title: External process communication
   description: Specification of communication between external process and CobiGen
@@ -9,14 +9,14 @@ info:
   x-rootpackage: com.devonfw.poc
 
 paths:
-  /processmanagement/todoplugin/isConnectionReady/:
+  /processmanagement/tsplugin/isConnectionReady/:
     get:
       description: Needed for CobiGen to know that the server is ready to receive requests. Also we need it to differentiate plug-ins.
       responses:
         '200':
           description: OK
 
-  /processmanagement/todoplugin/isValidInput/:
+  /processmanagement/tsplugin/isValidInput/:
     post:
       description: Returns true or false whether it is a valid input for generation. It can be a simple file extension check or more complex logic.
       requestBody:
@@ -32,7 +32,7 @@ paths:
         '404':
           description: Not found
 
-  /processmanagement/todoplugin/getInputModel/:
+  /processmanagement/tsplugin/getInputModel/:
     post:
       description: Requesting a key-value model of the input file in JSON format.
       requestBody:
@@ -48,7 +48,7 @@ paths:
         '404':
           description: Not found
 
-  /processmanagement/todoplugin/merge/:
+  /processmanagement/tsplugin/merge/:
     post:
       description:  Merges two files and returns the result
       requestBody:
