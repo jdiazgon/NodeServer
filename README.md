@@ -59,4 +59,4 @@ Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#t
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+  Nest is [APACHE 2.0 licensed](LICENSE).
