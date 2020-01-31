@@ -50,6 +50,11 @@ $ yarn run test:cov
 ## Create executable
 
 ```bash
+yarn install
+```
+There is a packaging issue due to the external library `pkg`, you will have to manually fix a module. Go to `node_modules\@devonfw\ts-merger\dist\`, copy `ts-merger.umd.js` and paste it to `node_modules\@devonfw\ts-merger\build`. Remove file `index.js` and rename `ts-merger.umd.js`to `index.js`. Finally:
+
+```bash
 $ yarn run build
 $ yarn pkg --targets latest-win-x64 --output nestserver-1.0.7.exe dist/main.js
 ```
