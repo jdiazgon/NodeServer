@@ -1,9 +1,9 @@
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
-nestserver-1.0.9.exe
-nestserver-linux-1.0.9
-nestserver-macos-1.0.9
+nestserver-*.exe
+nestserver-linux-*
+nestserver-macos-*
 .vscode
 dist/
 yarn-error.log
