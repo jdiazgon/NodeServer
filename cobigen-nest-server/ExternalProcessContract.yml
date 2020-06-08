@@ -14,7 +14,11 @@ paths:
       description: Needed for CobiGen to know that the server is ready to receive requests. Also we need it to differentiate plug-ins.
       responses:
         '200':
-          description: OK
+          description: Returns server version
+          content:
+            text/plain:
+              schema:
+                type: string
 
   /processmanagement/tsplugin/isValidInput/:
     post:
