@@ -58,6 +58,8 @@ There is a packaging issue due to the external library `pkg`, you will have to m
 $ yarn run build
 $ yarn pkg --targets latest-win-x64 --output nestserver-1.0.7.exe dist/main.js
 ```
+:warning: Since nestserver is released seperatedly for different os, please refer to branch `dev_linux` and `dev_macos` to merge changes and release the corresponding version as well
+
 ## Publish
 
 Please follow [this tutorial](https://yarnpkg.com/en/docs/publishing-a-package#toc-publishing-your-package)
