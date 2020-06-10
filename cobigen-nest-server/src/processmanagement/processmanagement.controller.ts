@@ -3,11 +3,13 @@ import { InputFileEto } from './etos/input-file.eto';
 import { MergerEto } from './etos/merger.eto';
 import { InputReader } from './inputreader/input-reader';
 
+const config = require('../../package.json');
+
 @Controller('processmanagement')
 export class ProcessmanagementController {
   @Get('tsplugin/isConnectionReady')
   isConnectionReady() {
-    return true;
+    return config.version;
   }
 
   @Post('tsplugin/isValidInput')
