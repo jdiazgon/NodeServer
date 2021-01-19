@@ -28,10 +28,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@devonfw/ts-merger@^2.2.9":
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/@devonfw/ts-merger/-/ts-merger-2.2.9.tgz#e6740c499bc854eef7e5cbc1209d1c26eb0a98be"
-  integrity sha512-Ow7pAfIAifVgXc/xp3GCbTsmVkpj1LRnmjjU7Nf/iMAHsTMxyG/g+XU7B16pg4mmcKkgvMhMBHYsTTOvdmCbPw==
+"@devonfw/ts-merger@^2.2.10":
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/@devonfw/ts-merger/-/ts-merger-2.2.10.tgz#706b6dc2a943970f05f5b6c82a8e746880805416"
+  integrity sha512-wk9e2mxPbjmZVZopQjjC0c4SrVzkl0eGcsEY3ArZNTd3a9miPbt6mdGtmfsLuHgFyro2p4MBzo7sOjC0ERDeRQ==
   dependencies:
     global "^4.4.0"
     ts-node "^8.0.2"
