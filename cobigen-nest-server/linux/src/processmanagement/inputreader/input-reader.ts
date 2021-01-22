@@ -1,10 +1,11 @@
 import { ModelEto } from './../etos/model.eto';
 import { InputFileEto } from '../etos/input-file.eto';
+import * as tsm from '@devonfw/ts-merger';
+
 export class InputReader {
   readonly content;
 
   public async getInputObjects(inputFile:InputFileEto, removeEmptyFields : boolean) {
-    const tsm = require('@devonfw/ts-merger');
     const parsedFile = tsm.readFile(inputFile.content);
 
     // Extending the model
