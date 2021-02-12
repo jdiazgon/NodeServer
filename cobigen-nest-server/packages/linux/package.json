@@ -18,7 +18,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prepare": "npm run package",
+    "package": "pkg --targets latest-linux-x64 --output \"nestserver-linux-%npm_package_version%\" dist/main.js"
   },
   "dependencies": {
     "@devonfw/ts-merger": "^2.2.10",

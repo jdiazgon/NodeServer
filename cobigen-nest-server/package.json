@@ -1,14 +1,22 @@
 {
+  "name": "cobigen-nest-server",
   "private": true,
   "workspaces": [
-    "windows",
-    "linux",
-    "macos"
+    "packages/*"
   ],
   "scripts": {
-    "prepare":"npm run build-windows && npm run build-linux && npm run build-macos",
-    "build-windows":"pkg --targets latest-win-x64 --output windows/nestserver-1.2.0.exe dist/main.js",
-    "build-linux":"pkg --targets latest-linux-x64 --output linux/nestserver-linux-1.2.0 dist/main.js",
-    "build-macos":"pkg --targets latest-macos-x64 --output macos/nestserver-macos-1.2.0 dist/main.js"
+    "build": "npm run cleanup:root && npm run cleanup:packages && tsc -p tsconfig.build.json && npm run copy:rename && npm run compress",
+    "cleanup:root": "rimraf dist",
+    "cleanup:packages": "rimraf packages/*/dist/",
+    "copy:rename": "npm run copy && npm run rename",
+    "copy": "copyfiles -f \"node_modules/@devonfw/ts-merger/dist/ts-merger.umd.js\" \"node_modules/@devonfw/ts-merger/build/\"",
+    "rename": "node -e \"require('fs').rename('node_modules/@devonfw/ts-merger/build/ts-merger.umd.js', 'node_modules/@devonfw/ts-merger/build/index.js', function(err) { if (err) console.log(err); console.log('File successfully renamed!') })\"",
+    "compress": "terser node_modules/@devonfw/ts-merger/build/index.js  --compress --mangle --warn --output node_modules/@devonfw/ts-merger/build/index.js"
+  },
+  "dependencies": {
+    "copyfiles": "^2.4.1",
+    "lerna": "^3.22.1",
+    "rimraf": "^2.6.2",
+    "terser": "^5.6.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@devonfw/cobigen-nestserver-macos",
+  "name": "@devonfw/cobigen-nestserver",
   "bin": "dist/main.js",
   "version": "1.2.0",
   "description": "Nestjs server to implement the input reader and merger for CobiGen",
@@ -18,7 +18,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prepare": "npm run package",
+    "package": "pkg --targets latest-win-x64 --output \"nestserver-%npm_package_version%.exe\" dist/main.js"
   },
   "dependencies": {
     "@devonfw/ts-merger": "^2.2.10",
