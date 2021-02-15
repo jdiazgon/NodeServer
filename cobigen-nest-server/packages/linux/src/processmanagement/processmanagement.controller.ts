@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { InputFileEto } from './etos/input-file.eto';
 import { MergerEto } from './etos/merger.eto';
 import { InputReader } from './inputreader/input-reader';
+import * as tsm from '@devonfw/ts-merger';
 
 const config = require('../../package.json');
 
@@ -39,7 +40,6 @@ export class ProcessmanagementController {
     const baseContent: string = merger.baseContent.replace(/\\n/gm, '\n');
     const patchOverrides: boolean = merger.patchOverrides;
 
-    const tsm = require('@devonfw/ts-merger');
     const mergedCode: string = tsm.merge(
       baseContent,
       patchContent,

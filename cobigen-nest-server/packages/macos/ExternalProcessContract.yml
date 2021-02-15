@@ -1,0 +1,175 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://localhost:5000/'
+    description: nest server
+info:
+  title: External process communication
+  description: Specification of communication between external process and CobiGen
+  version: 1.0.0
+  x-rootpackage: com.devonfw.poc
+
+paths:
+  /processmanagement/tsplugin/isConnectionReady/:
+    get:
+      description: Needed for CobiGen to know that the server is ready to receive requests. Also we need it to differentiate plug-ins.
+      responses:
+        '200':
+          description: Returns server version
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /processmanagement/tsplugin/isValidInput/:
+    post:
+      description: Returns true or false whether it is a valid input for generation. It can be a simple file extension check or more complex logic.
+      requestBody:
+        $ref: '#/components/requestBodies/InputFile'
+      operationId: isValidInput
+      responses:
+        '200':
+          description: Returns true or false whether it is a valid input for generation
+          content:
+            text/plain:
+              schema:
+                type: boolean
+        '404':
+          description: Not found
+
+  /processmanagement/tsplugin/getInputModel/:
+    post:
+      description: Requesting a key-value model of the input file in JSON format.
+      requestBody:
+        $ref: '#/components/requestBodies/InputFile'
+      operationId: getInputObjects
+      responses:
+        '200':
+          description: Returns a model in JSON format
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+
+  /processmanagement/tsplugin/merge/:
+    post:
+      description:  Merges two files and returns the result
+      requestBody:
+        $ref: '#/components/requestBodies/Merger'
+      operationId: merge
+      responses:
+        '200':
+          description: Returns merge file as a string
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Not found
+
+components:
+    schemas:
+        Model:
+          x-component: processmanagement
+          description: Data model of the input file
+          type: object
+          properties:
+            path:
+              type: string
+              description: Input file path. It can also be just the file name.
+              uniqueItems: true
+            inputObject:
+              $ref: '#/components/schemas/InputObject'
+        InputObject:
+          x-component: processmanagement
+          description: Input object containing needed information for the templates
+          type: object
+          properties:
+            Fields:
+              $ref: '#/components/schemas/Fields'
+            Imports: 
+              $ref: '#/components/schemas/Imports'
+        Fields:
+          x-component: processmanagement
+          description: Not really needed, just used as an example for the model.
+          type: array
+          items:
+            type: object
+            properties:
+              Field:
+                $ref: '#/components/schemas/Field'
+        Field:
+          x-component: processmanagement
+          description: Not really needed, just used as an example for the model.
+          type: object
+          properties:
+            fieldName:
+                type: string
+            fieldType:
+                type: string
+        Imports:
+          x-component: processmanagement
+          description: Not really needed, just used as an example for the model.
+          type: array
+          items:
+            type: object
+            properties:
+              Import:
+                $ref: '#/components/schemas/Import'
+        Import:
+          x-component: processmanagement
+          description: Not really needed, just used as an example for the model.
+          type: object
+          properties:
+            importValue:
+                type: string
+        InputFile:
+          x-component: processmanagement
+          description: Input file
+          type: object
+          properties:
+            filename:
+              type: string
+            content:
+              type: string
+            charset:
+              type: string
+        Merger:
+          x-component: processmanagement
+          description: Merger properties. baseContent is the current user's file. patchContent is CobiGen freshly generated file. patchOverrides is set to true when in case of conflict, we want to override using patch.
+          type: object
+          properties:
+            baseContent:
+              type: string
+            patchContent:
+              type: string
+            patchOverrides:
+              type: boolean
+
+
+    requestBodies:
+        Model:
+          description: Data model of the file in JSON format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+          required: true
+
+        InputFile:
+          description: Input file for CobiGen to parse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputFile'
+          required: true
+          
+        Merger:
+          description: baseContent is the current user's file. patchContent is CobiGen freshly generated file. patchOverrides is set to true when in case of conflict, we want to override using patch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Merger'
+          required: true
+ 
